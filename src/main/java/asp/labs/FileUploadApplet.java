@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.JApplet;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.UIManager;
 
 /* 
  <OBJECT classid="clsid:8AD9C840-044E-11D1-B3E9-00805F499D93"  
@@ -51,6 +52,15 @@ public class FileUploadApplet extends JApplet {
 			public void actionPerformed(ActionEvent ae) {
 				JFileChooser fc = new JFileChooser();
 				fc.setCurrentDirectory(new File("C:\\"));
+				fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+				try {
+					// For Mac
+					// @see
+					// http://supunmali-myexperience.blogspot.in/2012/10/issue-jfilechooser-on-mac-os-x.html
+					UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+				} catch (Exception e) {
+					System.out.println("Error setting Java LAF: " + e);
+				}
 				int returnVal = fc.showSaveDialog(FileUploadApplet.this);
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File f = fc.getSelectedFile();
